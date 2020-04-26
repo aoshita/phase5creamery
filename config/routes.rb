@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   get 'home/privacy', to: 'home#privacy', as: :privacy
   get 'home/search', to: 'home#search', as: :search
 
+  resources :sessions
+  get 'login', to: 'sessions#new', as: :login
+  get 'logout', to: 'sessions#destroy', as: :logout 
   # Resource routes (maps HTTP verbs to controller actions automatically):
   resources :employees
   resources :stores
@@ -16,7 +19,7 @@ Rails.application.routes.draw do
   resources :jobs
   resources :pay_grades
   resources :pay_grade_rates
-  
+
 
   # Custom routes
   patch 'assignments/:id/terminate', to: 'assignments#terminate', as: :terminate_assignment
