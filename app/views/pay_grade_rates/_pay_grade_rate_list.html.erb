@@ -1,20 +1,23 @@
 <div class="card">
   <div class="card-content">
-    <h4><%= state.capitalize %> Pay Rate in AMC</h4>
-
+    <h4> Pay Rates in AMC</h4>
     <% if @pay_grade_rates.empty? %>
       <p>There are no Pay Rates at this time.</p>
     <% else %>
 
       <table class="striped highlight">
         <thead>
-          <th>Level</th>
-          <th>Active</th>
+          <th>Rate</th>
+          <th>Start Date</th>
+          <th>Start Date</th>
+          <<th>Pay Grade Level</th>
         </thead>
         <% @pay_grade_rates.each do |pay_grade_rate| %>
           <tr>
-            <td><%= pay_grade_rate.level %></td>
-            <td><%= pay_grade_rate.active ? 'Yes' : 'No' %></td>
+            <td><%= pay_grade_rate.rate %></td>
+            <td><%= pay_grade_rate.start_date %></td>
+            <td><%= pay_grade_rate.end_date.nil ? 'N/A' : pay_grade_rate.end_date %></td>
+            <td><%= pay_grade_rate.pay_grade.level %></td>
           </tr>
         <% end %>
       </table>

@@ -1,5 +1,4 @@
 class PayGradeRateRatesController < ApplicationController
-  before_action :set_pay_grade_rate, only: [:show, :edit, :update, :destroy]
 
   def index
     @pay_grade_rates = PayGradeRate.chronological.paginate(page: params[:page]).per_page(10)
@@ -12,7 +11,7 @@ class PayGradeRateRatesController < ApplicationController
   def create
     @pay_grade_rate = PayGradeRate.new(pay_grade_rate_params)
     if @pay_grade_rate.save
-      redirect_to @pay_grade_rate, notice: "Successfully added #{@pay_grade_rate.rate} as an pay_grade_rate."
+      redirect_to pay_grade_rates_path, notice: "Successfully added #{@pay_grade_rate.rate} as an pay_grade_rate."
     else
       render action: 'new'
     end
