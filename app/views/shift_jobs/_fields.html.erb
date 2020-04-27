@@ -1,0 +1,2 @@
+<%= f.input :shift_id, as: :hidden, input_html: {value: @shift.id} %>
+<%= f.input :job_id, collection: Job.active.to_a, include_blank: true%>

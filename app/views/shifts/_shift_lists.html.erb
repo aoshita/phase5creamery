@@ -14,7 +14,7 @@
           <th>Start Time</th>
           <th>End Time</th>
           <!-- <th>Status</th> -->
-          <th>View Details</th>
+          <th class = "align_center">View Details</th>
           <th> Options</th>
         </thead>
         <% shifts.each do |shift| %>
@@ -25,7 +25,7 @@
             <td><%= shift.start_time.strftime('%l:%M %p') %></td>
             <td><%= shift.end_time.nil? ? "#{shift.status.capitalize}" : shift.end_time.strftime('%l:%M %p') %></td>
             <!-- <td><%= shift.status.capitalize %> </td> -->
-            <td>
+            <td class = "align_center">
               <%= link_to shift_path(shift) do %>
                 <i class="material-icons">details</i>
               <% end %>
