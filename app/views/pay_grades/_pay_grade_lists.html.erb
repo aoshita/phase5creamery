@@ -2,7 +2,7 @@
   <div class="card-content">
     <h4><%= state.capitalize %> Pay Grades in AMC</h4>
 
-    <% if @pay_grades.empty? %>
+    <% if pay_grades.empty? %>
       <p>There are no <%= state.downcase %> pay_grades at this time.</p>
     <% else %>
 
@@ -11,7 +11,7 @@
           <th>Level</th>
           <th>Active</th>
         </thead>
-        <% @pay_grades.each do |pay_grade| %>
+        <% pay_grades.each do |pay_grade| %>
           <tr>
             <td><%= pay_grade.level %></td>
             <td><%= pay_grade.active ? 'Yes' : 'No' %></td>

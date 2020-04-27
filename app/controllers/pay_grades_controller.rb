@@ -1,5 +1,5 @@
 class PayGradesController < ApplicationController
-  before_action :set_pay_grade, only: [:show, :edit, :update, :destroy]
+  before_action :set_pay_grade, only: []:edit, :update, :destroy]
 
   def index
     # for phase 3 only
