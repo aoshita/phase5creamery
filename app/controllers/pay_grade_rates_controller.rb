@@ -1,4 +1,4 @@
-class PayGradeRateRatesController < ApplicationController
+class PayGradeRatesController < ApplicationController
 
   def index
     @pay_grade_rates = PayGradeRate.chronological.paginate(page: params[:page]).per_page(10)

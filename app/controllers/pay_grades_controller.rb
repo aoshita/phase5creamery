@@ -1,5 +1,5 @@
 class PayGradesController < ApplicationController
-  before_action :set_pay_grade, only: []:edit, :update, :destroy]
+  before_action :set_pay_grade, only: [:edit, :update, :destroy]
 
   def index
     # for phase 3 only
@@ -19,7 +19,7 @@ class PayGradesController < ApplicationController
   def create
     @pay_grade = PayGrade.new(pay_grade_params)
     if @pay_grade.save
-      redirect_to @pay_grade, notice: "Successfully added #{@pay_grade.proper_name} as an pay_grade."
+      redirect_to pay_grades_path, notice: "Successfully added #{@pay_grade.level} as an pay_grade."
     else
       render action: 'new'
     end
@@ -27,7 +27,7 @@ class PayGradesController < ApplicationController
 
   def update
     if @pay_grade.update_attributes(pay_grade_params)
-      redirect_to @pay_grade, notice: "Updated #{@pay_grade.proper_name}'s information."
+      redirect_to pay_grades_path, notice: "Updated #{@pay_grade.level}'s information."
     else
       render action: 'edit'
     end

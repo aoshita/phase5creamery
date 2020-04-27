@@ -3,18 +3,24 @@
     <h4><%= state.capitalize %> Pay Grades in AMC</h4>
 
     <% if pay_grades.empty? %>
-      <p>There are no <%= state.downcase %> pay_grades at this time.</p>
+      <p>There are no <%= state.downcase %> pay grades at this time.</p>
     <% else %>
 
       <table class="striped highlight">
         <thead>
           <th>Level</th>
           <th>Active</th>
+          <th class="align_center">Options</th>
         </thead>
         <% pay_grades.each do |pay_grade| %>
           <tr>
             <td><%= pay_grade.level %></td>
             <td><%= pay_grade.active ? 'Yes' : 'No' %></td>
+            <td class="align_center">
+              <%= link_to edit_pay_grade_path(pay_grade) do %>
+                <i class="material-icons">edit</i>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </table>

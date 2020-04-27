@@ -7,16 +7,16 @@
 
       <table class="striped highlight">
         <thead>
+          <th>Start Date</th>
+          <th>End Date</th>
           <th>Rate</th>
-          <th>Start Date</th>
-          <th>Start Date</th>
-          <<th>Pay Grade Level</th>
+          <th>Pay Grade Level</th>
         </thead>
         <% @pay_grade_rates.each do |pay_grade_rate| %>
           <tr>
+            <td><%= pay_grade_rate.start_date.strftime('%b %d, %Y') %></td>
+            <td><%= pay_grade_rate.end_date.nil? ? 'Current' : pay_grade_rate.end_date.strftime('%b %d, %Y') %></td>
             <td><%= pay_grade_rate.rate %></td>
-            <td><%= pay_grade_rate.start_date %></td>
-            <td><%= pay_grade_rate.end_date.nil ? 'N/A' : pay_grade_rate.end_date %></td>
             <td><%= pay_grade_rate.pay_grade.level %></td>
           </tr>
         <% end %>
