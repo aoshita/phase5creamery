@@ -10,7 +10,8 @@ class ShiftsController < ApplicationController
   end
 
   def show
-    @jobs_completed = @shift.jobs.sort_by{|j| j.name}
+    @jobs_completed = @shift.jobs.all.sort_by{|j| j.name}
+    #@shift_jobs = ShiftJob.find(params[:shift_id])
   end
 
   def new

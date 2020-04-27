@@ -1,0 +1,27 @@
+<div class="card">
+  <div class="card-content">
+    <h4><%= @shift.employee.proper_name %></h4>
+    <h5><%= @shift.employee.role.capitalize %></h5><br />
+
+    <b>Assignment:&nbsp;&nbsp;</b><br>
+      <% if @shift.assignment.nil? %>
+        n/a<br /><br />
+      <% else %>
+        <%= link_to @shift.store.name, store_path(@shift.store) %><br />
+        since <%= @shift.assignment.start_date.strftime("%b %-d, %Y") %><br /><br />
+      <% end %>
+
+    <b>Date:&nbsp;&nbsp;</b><br>
+      <%= @shift.date.to_datetime.strftime("%b %-d, %Y") %><br /><br />
+
+    <b>Start Time:&nbsp;&nbsp;</b><br>
+      <%= @shift.start_time.strftime('%l:%M %p') %><br /><br />
+
+    <b>End Time:&nbsp;&nbsp;</b><br>
+      <%= @shift.end_time.nil? ? "#{shift.status.capitalize}" : @shift.end_time.strftime('%l:%M %p') %><br /><br />
+
+    <b>Notes:&nbsp;&nbsp;</b>
+      <%= @shift.notes %>
+      <br>
+  </div>
+</div>

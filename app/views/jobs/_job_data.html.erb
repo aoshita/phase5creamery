@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-content">
+    <h4><%= @job.name %> </h4> <br>
+    <h6> <b> Description:&nbsp;&nbsp;</b>
+      <%= @job.description %></h6><br />
+    <h4>Store Performance</h4>
+      <table class="striped highlight">
+        <thead>
+          <th>Store</th>
+          <th>Times Completed at Store</th>
+        </thead>
+        <% Store.all.each do |store| %>
+          <tr %>
+            <td><%= link_to store.name, store_path(store) %></td>
+            <td>
+              <%= @job.shifts.for_store(store).to_a.size%>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+      <p class="supertiny"></p>
+      <br />
+    </div>
+</div>

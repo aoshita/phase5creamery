@@ -9,13 +9,15 @@ Rails.application.routes.draw do
 
   resources :sessions
   get 'login', to: 'sessions#new', as: :login
-  get 'logout', to: 'sessions#destroy', as: :logout 
+  get 'logout', to: 'sessions#destroy', as: :logout
   # Resource routes (maps HTTP verbs to controller actions automatically):
   resources :employees
   resources :stores
   resources :assignments
 
   resources :shifts
+  resources :jobs
+  resources :shift_jobs
   resources :jobs
   resources :pay_grades
   resources :pay_grade_rates

@@ -1,0 +1,23 @@
+<% unless @top_performers.empty? %>
+  <div class="card">
+    <div class="card-content">
+      <h5> Top Performing Employees in the Past 3 Months</h5>
+
+      <table class="striped highlight">
+        <thead>
+          <th>Name</th>
+          <th>Shifts Completed Doing <%= @job.name.titlecase%></th>
+        </thead>
+        <% @top_performers.each do |emp_id,shifts| %>
+          <tr %>
+            <td><%= link_to shifts[1].name, employees_path(id: emp_id)%></td>
+            <td><%= shifts.size %></td>
+          </tr>
+        <% end %>
+      </table>
+      <p class="supertiny"></p>
+      <br />
+    </div>
+  </div>
+
+<% end %>
