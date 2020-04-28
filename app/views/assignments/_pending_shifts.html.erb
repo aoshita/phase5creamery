@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-content">
+    <h4>Upcoming Shifts</h4>
+    <% if @upcoming_shifts.empty? %>
+      <p>There are no upcoming shifts at this time.</p>
+    <% else %>
+      <table class="striped highlight">
+        <thead>
+          <th>Date</th>
+          <th>Start Time</th>
+        </thead>
+        <% @upcoming_shifts.each do |shift| %>
+          <tr %>
+            <td><%= shift.date.strftime("%-m/%-d/%y") %></td>
+            <td><%= shift.start_time.strftime('%l:%M %p') %></td>
+          </tr>
+        <% end %>
+        <br>
+      </table>
+      <p class="supertiny"></p>
+      <br />
+      <%end%>
+    </div>
+</div>

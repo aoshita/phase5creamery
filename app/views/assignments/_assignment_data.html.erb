@@ -1,0 +1,42 @@
+<div class="card">
+  <div class="card-content">
+    <h4><%= "#{@assignment.employee.proper_name}'s Assignment" %> </h4> <br>
+
+    <b> Store:&nbsp;&nbsp;</b>
+      <%= link_to @assignment.store.name, store_path(@assignment.store) %><br />
+
+    <% if @assignment.end_date.nil? %>
+      Current Assignment since <%= @assignment.start_date.strftime("%b %-d, %Y") %>
+    <% else %>
+    <b>Duration:&nbsp;&nbsp;</b>
+      <%= @assignment.start_date.strftime("%-m/%-d/%y") %> - <%= @assignment.end_date.strftime("%-m/%-d/%y") %>
+    <% end %>
+    <br>
+    <b>Pay Grade:&nbsp;&nbsp;</b>
+      <%= link_to @assignment.pay_grade.level, pay_grade_path(@assignment.pay_grade) %><br>
+
+    <h4>Completed Shifts</h4>
+    <table class="striped highlight">
+      <thead>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Duration</th>
+        <th>Jobs Completed</th>
+      </thead>
+      <% @completed_shifts.each do |shift| %>
+        <tr %>
+          <td><%= link_to shift.date.strftime("%-m/%-d/%y"), shift_path(shift) %></td>
+          <td><%= shift.start_time.strftime('%l:%M %p') %></td>
+          <td><%= shift.end_time.strftime('%l:%M %p') %></td>
+          <td><%= shift.duration%> hours</td>
+          <td><%= shift.jobs.map{ |j| j.name }.join(", ") %></td>
+        </tr>
+      <% end %>
+      <br>
+    </table>
+      <p class="supertiny"></p>
+      <br />
+      <%= will_paginate @completed_shifts, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+    </div>
+</div>

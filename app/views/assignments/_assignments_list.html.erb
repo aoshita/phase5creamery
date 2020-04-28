@@ -10,14 +10,22 @@
         <thead>
           <th>Employee Name</th>
           <th>Store Name</th>
+          <th>Pay Grade</th>
           <th>Dates</th>
+          <th class = 'align_center'>View Details</th>
           <th>Options</th>
         </thead>
         <% assignments.each do |assignment| %>
           <tr %>
             <td><%= link_to assignment.employee.name, employee_path(assignment.employee) %></td>
             <td><%= link_to assignment.store.name, store_path(assignment.store) %></td>
+            <td><%= link_to assignment.pay_grade.level, pay_grade_path(assignment.pay_grade) %></td>
             <td><%= assignment.start_date.strftime("%-m/%-d/%y") %> - <%= assignment.end_date.nil? ? 'Present' : assignment.end_date.strftime("%-m/%-d/%y") %></td>
+            <td class = "align_center">
+              <%= link_to assignment_path(assignment) do %>
+                <i class="material-icons">details</i>
+              <% end %>
+          </td>
             <td>
               <% if state.downcase == 'current' %>
                 <%= link_to(terminate_assignment_path(assignment), method: :patch) do %>
