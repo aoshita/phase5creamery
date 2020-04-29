@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="card-content">
+    <h4><%= @employee.proper_name%>'s <%= state.capitalize %> Shifts</h4>
+
+    <% if shifts.empty? %>
+      <p><%= @employee.proper_name%> has no <%= state.capitalize %> shifts at this time.</p>
+    <% else %>
+      <table class="striped highlight">
+        <thead>
+          <th>Date</th>
+          <th>Start Time</th>
+        </thead>
+        <% shifts.each do |shift| %>
+          <tr %>
+            <td><%= shift.date.strftime("%-m/%-d/%y") %></td>
+            <td><%= shift.start_time.strftime('%l:%M %p') %></td>
+          </tr>
+        <% end %>
+        <br>
+      </table>
+      <p class="supertiny"></p>
+      <br />
+      <%end%>
+    </div>
+</div>

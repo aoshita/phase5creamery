@@ -1,13 +1,4 @@
-<h5>A&M Creamery Home</h5>
-
-<p>This is our very creative home page.</p>
-<p>Now go away.</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>What are you still doing here?  Can't you follow instructions?</p>
-	
-<%# render :partial => 'general_home' %>
+<h4>Dashboard</h4>
+<%= render partial: 'partials/dashboard_structure' , locals: {primary: 'upcoming_shifts',
+                                                         secondary: nil,
+                                                         sidebar: 'active_stores'} %>

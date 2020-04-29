@@ -1,0 +1,37 @@
+<div class="card">
+  <div class="card-content">
+    <h5> Active Stores owned by AMC</h5>
+
+    <% if @active_stores.empty? %>
+      <p>There are no active stores at this time.</p>
+    <% else %>
+
+      <table class="striped highlight">
+        <thead>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Payroll</th>
+          <th class="align_center">Options</th>
+        </thead>
+        <% @active_stores.each do |store| %>
+          <tr>
+            <td><%= link_to store.name, store_path(store) %></td>
+            <td><%= number_to_phone store.phone %></td>
+            <td class="align_center">
+              <%= link_to edit_store_path(store) do %>
+                <i class="material-icons">assessment</i>
+              <% end %>
+            </td>
+            <td class="align_center">
+              <%= link_to edit_store_path(store) do %>
+                <i class="material-icons">edit</i>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+      <p class="supertiny"></p>
+      <br />
+    <% end %>
+  </div>
+</div>

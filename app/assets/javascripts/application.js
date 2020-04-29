@@ -33,6 +33,7 @@ $(document).ready(function() {
   jQuery(".best_in_place").best_in_place();
 });
 
+
 // Search submit on enter
 $(document).ready(function() {
   function submitForm() {
@@ -44,4 +45,3 @@ $(document).ready(function() {
     }
   }
 });
-

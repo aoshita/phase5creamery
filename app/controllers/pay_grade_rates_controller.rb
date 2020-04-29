@@ -2,6 +2,8 @@ class PayGradeRatesController < ApplicationController
 
   def index
     @pay_grade_rates = PayGradeRate.chronological.paginate(page: params[:page]).per_page(10)
+    @current_rates = PayGradeRate.current.chronological.paginate(page: params[:page]).per_page(10)
+    @past_rates = PayGradeRate.where.not(end_date: nil).chronological.paginate(page: params[:page]).per_page(10)
   end
 
   def new

@@ -25,7 +25,9 @@ Rails.application.routes.draw do
 
   # Custom routes
   patch 'assignments/:id/terminate', to: 'assignments#terminate', as: :terminate_assignment
-
+  get 'stores/:id/payroll', to: 'payrolls#store_pay', as: :store_payroll
+  get 'employees/:id/payroll', to: 'payrolls#emp_pay', as: :employee_payroll
+  get 'payrolls', to: 'payrolls#store_calc', as: :store_calc
   # You can have the root of your site routed with 'root'
   root 'home#index'
 end

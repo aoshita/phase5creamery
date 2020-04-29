@@ -1,10 +1,9 @@
 <div class="card">
   <div class="card-content">
-    <h4> Pay Rates in AMC</h4>
-    <% if @pay_grade_rates.empty? %>
-      <p>There are no Pay Rates at this time.</p>
+    <h4><%= state.capitalize %> Pay Rates at AMC</h4>
+    <% if pay_grade_rates.empty? %>
+      <p>There are no <%= state.downcase %> Pay Rates at this time.</p>
     <% else %>
-
       <table class="striped highlight">
         <thead>
           <th>Start Date</th>
@@ -12,18 +11,18 @@
           <th>Rate</th>
           <th>Pay Grade Level</th>
         </thead>
-        <% @pay_grade_rates.each do |pay_grade_rate| %>
+        <% for rate in pay_grade_rates %>
           <tr>
-            <td><%= pay_grade_rate.start_date.strftime('%b %d, %Y') %></td>
-            <td><%= pay_grade_rate.end_date.nil? ? 'Current' : pay_grade_rate.end_date.strftime('%b %d, %Y') %></td>
-            <td><%= pay_grade_rate.rate %></td>
-            <td><%= pay_grade_rate.pay_grade.level %></td>
+            <td><%= rate.start_date.strftime('%b %d, %Y') %></td>
+            <td><%= rate.end_date.nil? ? 'Current' : rate.end_date.strftime('%b %d, %Y') %></td>
+            <td><%= rate.rate %></td>
+            <td><%= rate.pay_grade.level %></td>
           </tr>
         <% end %>
       </table>
       <p class="supertiny"></p>
       <br />
-      <%= will_paginate @pay_grade_rates, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+      <%= will_paginate pay_grade_rates, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
     <% end %>
   </div>
 </div>

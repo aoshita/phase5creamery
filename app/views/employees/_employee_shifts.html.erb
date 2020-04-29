@@ -1,0 +1,3 @@
+<%= render partial: 'shift_lists', locals: {shifts: @past_shifts, state: 'past'} %>
+<p>&nbsp;</p>
+<%= render partial: 'shift_lists', locals: {shifts: @upcoming_shifts, state: 'upcoming'} %>
