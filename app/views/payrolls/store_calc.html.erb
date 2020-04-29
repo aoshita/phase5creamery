@@ -1,0 +1,32 @@
+<div class="card">
+  <div class="card-content">
+    <h5>Payroll Report for the <%= @store.name%> Store</h5>
+    <% if @store_payrolls.empty? %>
+      <p>There are no payrolls for this store in the given time frame.</p>
+    <% else %>
+      <table class="striped highlight">
+        <thead>
+          <th>Employee Name</th>
+          <th>Ssn</th>
+          <th>Pay Grade</th>
+          <th>Pay Rate</th>
+          <th>Total Hours Worked</th>
+          <th>Total Pay Earned</th>
+        </thead>
+        <% @store_payrolls.each do |payroll| %>
+          <tr>
+            <td><%= link_to payroll.employee_name, employee_path(payroll.employee) %></td>
+            <td><%= number_to_ssn @employee.ssn %></td>
+            <td><%= payroll.pay_grade.level %></td>
+            <td><%= payroll.pay_grade_rate.rate %></td>
+            <td><%= payroll.hours %></td>
+            <td><%= payroll.pay_earned %></td>
+
+          </tr>
+        <% end %>
+      </table>
+      <p class="supertiny"></p>
+      <br />
+    <% end %>
+  </div>
+</div>

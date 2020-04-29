@@ -18,7 +18,7 @@
             <td><%= link_to store.name, store_path(store) %></td>
             <td><%= number_to_phone store.phone %></td>
             <td class="align_center">
-              <%= link_to edit_store_path(store) do %>
+              <%= link_to store_payroll_path(store) do %>
                 <i class="material-icons">assessment</i>
               <% end %>
             </td>

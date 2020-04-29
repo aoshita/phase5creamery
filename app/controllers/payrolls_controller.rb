@@ -1,5 +1,4 @@
 class PayrollsController < ApplicationController
-
   def store_pay_form
     @store = Store.find(params[:id])
   end
@@ -7,40 +6,31 @@ class PayrollsController < ApplicationController
   def store_calc
     sd = params[:start]
     ed = params[:end]
-    store = Store.find(params[:store_id])
+    @store = Store.find(params[:store_id])
     date_range = DateRange.new(sd,ed)
-    calc = PayrollCalc.new(date_range)
-    calc.get_store
+    calc = PayrollCalculator.new(date_range)
+    @store_payrolls = calc.create_payroll_for(@store)
   end
 
   def emp_pay
     emp = Employee.find(params[:id])
-    date_range = DateRange.new(14.days.ago)
-    calc = PayrollCalc.new(date_range)
-    calc.get_employee
+    date_range = DateRange.new(7.days.ago)
+    calc = PayrollCalculator.new(date_range)
+    @emp_payroll = calc.create_payroll_record_for(emp)
   end
 
-
-
   private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_employee
-    @employee = Employee.find(params[:id])
+  def store_params
+    params.require(:store).permit(:name, :street, :city, :phone, :state, :zip, :active)
+  end
+
+  def calc_params
+    params.require(:store).permit()
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_params
     params.require(:employee).permit(:first_name, :last_name, :ssn, :phone, :date_of_birth, :role, :active, :username, :password, :password_confirmation)
-  end
-
-  def retrieve_employee_assignments
-    @current_assignment = @employee.current_assignment
-    @previous_assignments = @employee.assignments.to_a - [@current_assignment]
-  end
-
-  def retrieve_employee_shifts
-    @past_shifts = @employee.shifts.for_past_days(7)
-    @upcoming_shifts = @employee.shifts.for_next_days(7)
   end
 
 end
