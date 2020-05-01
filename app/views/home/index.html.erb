@@ -1,4 +1,9 @@
-<h4>Dashboard</h4>
-<%= render partial: 'partials/dashboard_structure' , locals: {primary: 'upcoming_shifts',
-                                                         secondary: nil,
-                                                         sidebar: 'active_stores'} %>
+<% if logged_in? && ( current_employee.role?(:admin)) %>
+  <%= render :partial => "home/admin_dashboard" %>
+<% elsif logged_in? && current_employee.role?(:manager) %>
+  <%= render :partial => "home/manager_dashboard" %>
+<% elsif logged_in? && current_employee.role?(:employee) %>
+  <%= render :partial => "home/employee_dashboard" %>
+<% else %>
+  <%= render :partial => "home/general_home" %>
+<% end %>

@@ -2,20 +2,21 @@
   <div class="col s9">
     <div class="card">
       <div class="card-content">
-        <span class="card-title"><%= type_of_form %></span>
-        <%= simple_form_for(object) do |f| %>
+        <span class="card-title">New Payroll Report</span>
+        <%= simple_form_for :employee, :url => '/payrolls', method: 'get' do |f| %>
           <%= f.error_notification %>
           <div class="row">
             <div class="form-inputs">
-              <%= f.input :start%>
-              <%= f.input :end%>
+              <%= f.input :start, as: :date, label_html: {class: 'active'}, selected: Date.today-2.weeks%>
+              <%= f.input :end,  as: :date, label_html: {class: 'active'}, selected: Date.today%>
+              <%= f.input :store_id, collection: Store.alphabetical.active.to_a, input_html: { value: @store.id }%>
           </div>
         </div>
       </div>
     </div>
       <div class="row">
         <div class="form-actions col s9">
-          <%= f.button :submit %>
+          <%= f.button :submit, 'Calculate Payroll' %>
         </div>
       </div>
     <% end %>

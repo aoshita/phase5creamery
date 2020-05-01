@@ -1,6 +1,8 @@
 class ShiftJobsController < ApplicationController
 
   before_action :set_shift_job, only: [:destroy]
+  before_action :check_login
+  authorize_resource
 
   def new
     @shift_job = ShiftJob.new
@@ -24,7 +26,7 @@ class ShiftJobsController < ApplicationController
     if @shift_job.destroy
       redirect_to shift_path(@shift), notice: "Removed from #{@shift.employee.name}'s shift."
     else
-      
+
       render action: 'show'
     end
 

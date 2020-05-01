@@ -1,4 +1,6 @@
 class PayGradeRatesController < ApplicationController
+  before_action :check_login
+  authorize_resource
 
   def index
     @pay_grade_rates = PayGradeRate.chronological.paginate(page: params[:page]).per_page(10)
@@ -21,12 +23,6 @@ class PayGradeRatesController < ApplicationController
 
 
   private
-  # Use callbacks to share common setup or constraints between actions.
-  # def set_pay_grade_rate
-  #   @pay_grade_rate = PayGradeRate.find(params[:id])
-  # end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
   def pay_grade_rate_params
     params.require(:pay_grade_rate).permit(:pay_grade_id, :rate, :start_date, :end_date)
   end
