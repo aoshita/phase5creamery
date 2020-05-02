@@ -1,1 +1,5 @@
 <%= render partial: 'employees/employee_data', locals: {object: @employee} %>
+<div class= "row">
+  <%= render :partial => 'partials/display_base_errors', locals: {object: @employee} %>
+  <%= render :partial => 'partials/object_options', locals: {model_name: 'employee', object: @employee} %>
+</div>
