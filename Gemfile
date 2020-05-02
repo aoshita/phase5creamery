@@ -43,6 +43,7 @@ gem 'simple_form'
 gem 'materialize-form', git: 'https://github.com/cmu-is-projects/materialize-form.git'
 gem 'will_paginate'
 gem 'jquery-rails', '4.3.1'
+gem 'vuejs-rails'
 gem 'jquery-ui-rails', '6.0.1'
 
 # Reduces boot times through caching; required in config/boot.rb

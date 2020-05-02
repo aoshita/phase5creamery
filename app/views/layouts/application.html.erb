@@ -13,16 +13,16 @@
   <body>
     <!-- Partials for the topbar and navigation -->
     <%= render :partial => "partials/topbar" %>
-    <% if logged_in? && ( current_employee.role?(:admin)) %>
+    <% if logged_in? && ( current_user.role?(:admin)) %>
       <%= render :partial => "partials/nav" %>
-    <% elsif logged_in? && current_employee.role?(:manager) %>
+    <% elsif logged_in? && current_user.role?(:manager) %>
       <%= render :partial => "partials/nav_manager" %>
-    <% elsif logged_in? && current_employee.role?(:employee) %>
+    <% elsif logged_in? && current_user.role?(:employee) %>
       <%= render :partial => "partials/nav_employee" %>
     <% else %>
       <%= render :partial => "partials/nav_guest" %>
     <% end %>
-    
+
     <main>
     <div class="container">
       <div class="row">

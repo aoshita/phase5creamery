@@ -93,6 +93,27 @@ th.align_center {
   text-align: center;
 }
 
+/********** TABS ********/
+.tabs .tab a.active {
+  color: #ffc400;
+}
+
+.tabs .tab a:hover {
+  color: #ffd600;
+}
+
+.tabs .tab a {
+  color: #bdbdbd;
+}
+
+.tabs .indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background-color: #ffd600;
+  will-change: left, right;
+}
+
 /********** BUTTONS ********/
 .btn {
   background-color: #FFCB05;
@@ -234,7 +255,7 @@ li.no_bullet {
   transition: opacity 300ms ease-out;
   background-color: #008CBA;
   border-color: #0078a0;
-  color: #FFFFFF; } 
+  color: #FFFFFF; }
   .alert-box .close {
     right: 0.25rem;
     background: inherit;

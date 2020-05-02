@@ -7,8 +7,13 @@ class ShiftsController < ApplicationController
 
   def index
     # get data on all shifts and paginate the output to 10 per page
-    @upcoming_shifts = Shift.upcoming.chronological.paginate(page: params[:page]).per_page(10)
-    @completed_shifts = Shift.completed.chronological.paginate(page: params[:ipage]).per_page(10)
+    if logged_in? and current_user.role == 'employee'
+      @upcoming_shifts = current_user.shifts.upcoming.chronological.paginate(page: params[:page]).per_page(10)
+      @completed_shifts = current_user.shifts.completed.chronological.paginate(page: params[:ipage]).per_page(10)
+    else
+      @upcoming_shifts = Shift.upcoming.chronological.paginate(page: params[:page]).per_page(10)
+      @completed_shifts = Shift.completed.chronological.paginate(page: params[:ipage]).per_page(10)
+    end
   end
 
   def show

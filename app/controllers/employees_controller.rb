@@ -1,14 +1,21 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: [:show, :edit, :update, :destroy]
   before_action :check_login
+  #filter_parameter_logging :role,
   authorize_resource
 
   def index
     # for phase 3 only
-    @active_managers = Employee.managers.active.alphabetical.paginate(page: params[:page]).per_page(10)
-    @active_employees = Employee.regulars.active.alphabetical.paginate(page: params[:page]).per_page(10)
-    @inactive_employees = Employee.inactive.alphabetical.paginate(page: params[:page]).per_page(10)
-
+    #if logged_in? and current_user.role == 'admin'
+      @active_managers = Employee.managers.active.alphabetical.paginate(page: params[:page]).per_page(10)
+      @active_employees = Employee.regulars.active.alphabetical.paginate(page: params[:page]).per_page(10)
+      @inactive_employees = Employee.inactive.alphabetical.paginate(page: params[:page]).per_page(10)
+    #elsif logged_in? and current_user.role == 'manager' and !current_user.current_assignment.nil?
+      # store = current_user.current_assignment.store
+      # @active_managers = store.employees.managers.active.alphabetical.paginate(page: params[:page]).per_page(10)
+      # @active_employees = store.employees.regulars.active.alphabetical.paginate(page: params[:page]).per_page(10)
+      # @inactive_employees = store.employees.inactive.alphabetical.paginate(page: params[:page]).per_page(10)
+    #end
   end
 
   def show

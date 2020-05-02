@@ -17,12 +17,14 @@
             <td><%= link_to job.name, job_path(job) %></td>
             <td><%= job.description %></td>
             <td class="align_center">
+              <% if can? :manage, job%>
               <%= link_to edit_job_path(job) do %>
-                <i class="material-icons">edit</i>
-              <% end %>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <%= link_to(job_path(job), method: :delete, data: { confirm: 'Are you sure you wish to delete this job?' }) do %>
-                  <i class="material-icons">delete</i>
+                  <i class="material-icons">edit</i>
+                <% end %>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <%= link_to(job_path(job), method: :delete, data: { confirm: 'Are you sure you wish to delete this job?' }) do %>
+                    <i class="material-icons">delete</i>
+                <% end %>
               <% end %>
             </td>
           </tr>

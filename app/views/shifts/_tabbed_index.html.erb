@@ -1,0 +1,17 @@
+<div id="tabbed">
+  <tabs>
+
+    <tab name="completed shifts" v-bind:selected="true">
+      <%= render partial: 'shift_lists', locals: { state: 'completed', shifts: @completed_shifts } %>
+
+    </tab>
+
+    <tab name="upcoming">
+      <%= render partial: 'shift_lists', locals: { state: 'upcoming',shifts: @upcoming_shifts } %>
+
+    </tab>
+
+  </tabs>
+</div>
+
+<p>&nbsp;</p>

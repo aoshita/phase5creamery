@@ -15,18 +15,18 @@ class ApplicationController < ActionController::Base
 
   private
   # Handling authentication
-  def current_employee
-    @current_employee ||= Employee.find(session[:employee_id]) if session[:employee_id]
+  def current_user
+    @current_user ||= Employee.find(session[:employee_id]) if session[:employee_id]
   end
-  helper_method :current_employee
+  helper_method :current_user
 
   def logged_in?
-    current_employee
+    current_user
   end
   helper_method :logged_in?
 
   def check_login
-    redirect_to login_path, alert: "You need to log in to view this page." if current_employee.nil?
+    redirect_to login_path, alert: "You need to log in to view this page." if current_user.nil?
   end
 
 end

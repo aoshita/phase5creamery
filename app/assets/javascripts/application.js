@@ -15,6 +15,7 @@
 //= require materialize
 //= require materialize-sprockets
 //= require materialize-form
+//= require vue
 //= require best_in_place
 //= require_tree .
 
