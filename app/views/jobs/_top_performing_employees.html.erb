@@ -10,7 +10,9 @@
         </thead>
         <% @top_performers.each do |emp_id,shifts| %>
           <tr %>
-            <td><%= link_to shifts[1].name, employees_path(id: emp_id)%></td>
+            <td>
+              <%=  shifts[1].name%></td>
+              <!-- , employees_path(id: emp_id -->
             <td><%= shifts.size %></td>
           </tr>
         <% end %>

@@ -1,0 +1,16 @@
+<div id="tabbed">
+  <tabs>
+
+    <tab name="active stores" v-bind:selected="true">
+      <%= render partial: 'store_lists', locals: {stores: @active_stores, state: 'active'} %>
+
+    </tab>
+    <tab name="inactive stores" >
+      <%= render partial: 'store_lists', locals: {stores: @inactive_stores, state: 'inactive'} %>
+
+    </tab>
+
+  </tabs>
+</div>
+
+<p>&nbsp;</p>

@@ -1,10 +1,9 @@
 <div class="card">
   <div class="card-content">
-    <h5><%= state.capitalize %> Assignments</h5>
-
     <% if assignments.empty? %>
       <p>There are no <%= state.downcase %> assignments at this time.</p>
     <% else %>
+    <h5><%= state.capitalize %> Assignments</h5>
 
       <table class="striped highlight">
         <thead>
@@ -13,30 +12,53 @@
           <th>Pay Grade</th>
           <th>Dates</th>
           <th class = 'align_center'>View Details</th>
-          <th>Options</th>
+          <% if current_user.role?(:admin)%>
+            <th>Options</th>
+          <% end %>
         </thead>
         <% assignments.each do |assignment| %>
           <tr %>
-            <td><%= link_to assignment.employee.name, employee_path(assignment.employee) %></td>
-            <td><%= link_to assignment.store.name, store_path(assignment.store) %></td>
-            <td><%= link_to assignment.pay_grade.level, pay_grade_path(assignment.pay_grade) %></td>
+            <td>
+              <% if can? :show, assignment.employee %>
+                <%= link_to assignment.employee.name, employee_path(assignment.employee) %>
+              <%else%>
+                <%=  assignment.employee.name%>
+              <%end%>
+            <td>
+              <% if can? :show, assignment.store %>
+                <%= link_to assignment.store.name, store_path(assignment.store) %>
+              <%else%>
+                <%=  assignment.store.name %>
+              <%end%>
+            </td>
+            <td>
+              <% if can? :show, assignment.pay_grade %>
+                <%= link_to assignment.pay_grade.level, pay_grade_path(assignment.pay_grade) %>
+              <%else%>
+                <%=  assignment.pay_grade.level %>
+              <%end%>
+            </td>
             <td><%= assignment.start_date.strftime("%-m/%-d/%y") %> - <%= assignment.end_date.nil? ? 'Present' : assignment.end_date.strftime("%-m/%-d/%y") %></td>
             <td class = "align_center">
-              <%= link_to assignment_path(assignment) do %>
-                <i class="material-icons">details</i>
-              <% end %>
-          </td>
-            <td>
-              <% if state.downcase == 'current' %>
-                <%= link_to(terminate_assignment_path(assignment), method: :patch) do %>
-                  <i class="material-icons">stop</i>
+              <% if can? :show, assignment %>
+                <%= link_to assignment_path(assignment) do %>
+                  <i class="material-icons">details</i>
                 <% end %>
               <% end %>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <%= link_to(assignment_path(assignment), method: :delete, data: { confirm: 'Are you sure you wish to delete this assignment?' }) do %>
-                  <i class="material-icons">delete</i>
-              <% end %>
-            </td>
+          </td>
+            <% if current_user.role?(:admin)%>
+              <td>
+                <% if state.downcase == 'current' %>
+                  <%= link_to(terminate_assignment_path(assignment), method: :patch) do %>
+                    <i class="material-icons">stop</i>
+                  <% end %>
+                <% end %>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <%= link_to(assignment_path(assignment), method: :delete, data: { confirm: 'Are you sure you wish to delete this assignment?' }) do %>
+                    <i class="material-icons">delete</i>
+                <% end %>
+              </td>
+            <% end %>
           </tr>
         <% end %>
       </table>

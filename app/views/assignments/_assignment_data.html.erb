@@ -3,8 +3,12 @@
     <h4><%= "#{@assignment.employee.proper_name}'s Assignment" %> </h4> <br>
 
     <b> Store:&nbsp;&nbsp;</b>
-      <%= link_to @assignment.store.name, store_path(@assignment.store) %><br />
-
+      <%if can? :show, @assignment.store %>
+        <%= link_to @assignment.store.name, store_path(@assignment.store) %>
+      <%else%>
+        <%=  @assignment.store.name %>
+        <%end%>
+      <br />
     <% if @assignment.end_date.nil? %>
       Current Assignment since <%= @assignment.start_date.strftime("%b %-d, %Y") %>
     <% else %>
@@ -13,8 +17,8 @@
     <% end %>
     <br>
     <b>Pay Grade:&nbsp;&nbsp;</b>
-      <%= link_to @assignment.pay_grade.level, pay_grade_path(@assignment.pay_grade) %><br>
-
+      <%if can? :show, @assignment.pay_grade%> <%= link_to @assignment.pay_grade.level, pay_grade_path(@assignment.pay_grade) %>
+      <%else%> <%=  @assignment.pay_grade.level %>  <%end%>
     <h4>Completed Shifts</h4>
     <table class="striped highlight">
       <thead>
@@ -23,14 +27,24 @@
         <th>End Time</th>
         <th>Duration</th>
         <th>Jobs Completed</th>
+        <% unless current_user.role?(:employee)%>
+          <th>View Details</th>
+        <% end %>
       </thead>
       <% @completed_shifts.each do |shift| %>
         <tr %>
-          <td><%= link_to shift.date.strftime("%-m/%-d/%y"), shift_path(shift) %></td>
+          <td><%= shift.date.strftime("%-m/%-d/%y") %></td>
           <td><%= shift.start_time.strftime('%l:%M %p') %></td>
           <td><%= shift.end_time.strftime('%l:%M %p') %></td>
           <td><%= shift.duration%> hours</td>
           <td><%= shift.jobs.map{ |j| j.name }.join(", ") %></td>
+          <% if can? :show, shift %>
+            <td class = "align_center">
+              <%= link_to shift_path(shift) do %>
+                <i class="material-icons">details</i>
+              <% end %>
+            </td>
+          <%end%>
         </tr>
       <% end %>
       <br>

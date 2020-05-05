@@ -6,11 +6,19 @@ class ShiftsController < ApplicationController
 
 
   def index
-    # get data on all shifts and paginate the output to 10 per page
+    # get data on all shifts and paginate the output to 10 per page\
     if logged_in? and current_user.role == 'employee'
       @upcoming_shifts = current_user.shifts.upcoming.chronological.paginate(page: params[:page]).per_page(10)
       @completed_shifts = current_user.shifts.completed.chronological.paginate(page: params[:ipage]).per_page(10)
     else
+      @stores = Store.active.alphabetical.to_a
+      if current_user.role?(:manager)
+        @store = current_user.current_assignment.store
+        # s_loc = @stores.index(store)
+        # @stores.insert(0, @stores.delete_at(s_loc))
+      else
+        @store = @stores[0]
+      end
       @upcoming_shifts = Shift.upcoming.chronological.paginate(page: params[:page]).per_page(10)
       @completed_shifts = Shift.completed.chronological.paginate(page: params[:ipage]).per_page(10)
     end
@@ -23,6 +31,8 @@ class ShiftsController < ApplicationController
 
   def new
     @shift = Shift.new
+    @shift.assignment_id = params[:assignment_id] unless params[:assignment_id].nil?
+    #@times =
   end
 
   def edit
@@ -44,6 +54,8 @@ class ShiftsController < ApplicationController
       render action: 'edit'
     end
   end
+
+
 
   private
   # Use callbacks to share common setup or constraints between actions.

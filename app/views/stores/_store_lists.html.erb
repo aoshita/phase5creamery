@@ -11,17 +11,26 @@
           <th>Name</th>
           <th>Current Assignments</th>
           <th>Phone</th>
-          <th class="align_center">Options</th>
+          <% if current_user.role?(:admin)%>
+            <th class="align_center">Options</th>
+          <%end%>
         </thead>
         <% stores.each do |store| %>
           <tr>
-            <td><%= link_to store.name, store_path(store) %></td>
+            <td>
+              <% if can? :show, store%>
+                <%= link_to store.name, store_path(store) %>
+                <%else%>
+                  <%= store.name %>
+                <%end%>
+              </td>
             <td><%= store.assignments.current.count %></td>
             <td><%= number_to_phone store.phone %></td>
-
-            <td class="align_center">
-              <%= link_to edit_store_path(store) do %>
-                <i class="material-icons">edit</i>
+            <% if can? :edit, store%>
+              <td class="align_center">
+                <%= link_to edit_store_path(store) do %>
+                  <i class="material-icons">edit</i>
+                <% end %>
               <% end %>
             </td>
           </tr>

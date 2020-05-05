@@ -1,17 +1,28 @@
 <div id="tabbed">
   <tabs>
 
-    <tab name="completed shifts" v-bind:selected="true">
-      <%= render partial: 'shift_lists', locals: { state: 'completed', shifts: @completed_shifts } %>
+    <% for store in @stores %>
+      <tab name="<%= store.name %>" v-bind:selected = "<%= store.name == @store.name ? 'true' : 'false'%>">
+        <%= render partial: 'shift_lists', locals: { shifts: @completed_shifts.for_store(store), state: 'completed' } %>
+      </tab>
 
-    </tab>
-
-    <tab name="upcoming">
-      <%= render partial: 'shift_lists', locals: { state: 'upcoming',shifts: @upcoming_shifts } %>
-
-    </tab>
+    <% end %>
 
   </tabs>
 </div>
+<p>&nbsp;</p>
+<div id="tabbed">
+  <tabs>
 
+    <% for store in @stores %>
+
+      <tab name= "upcoming shifts at <%= store.name %>" v-bind:selected = "<%= store.name == @store.name ? 'true' : 'false'%>">
+        <%= render partial: 'shift_lists', locals: { shifts: @upcoming_shifts.for_store(store), state: 'upcoming' } %>
+
+      </tab>
+
+    <% end %>
+
+  </tabs>
+</div>
 <p>&nbsp;</p>

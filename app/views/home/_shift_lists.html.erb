@@ -1,6 +1,13 @@
 <div class="card">
   <div class="card-content">
-    <h5><%= state.capitalize %> Shifts</h5>
+    <h5><%= state.capitalize %> Shifts
+      <% if current_user.role?(:manager) %> at
+        <strong>
+          <%= link_to store_path(@store) do %>
+            <%= @store.name %> Store </strong>
+        <% end %>
+        <% end %>
+      </h5>
 
     <% if shifts.empty? %>
       <p>There are no <%= state.downcase %> shifts at this time.</p>
@@ -9,37 +16,62 @@
       <table class="striped highlight">
         <thead>
           <th>Employee Name</th>
-          <th>Store Name</th>
+          <% unless current_user.role?(:manager) %>
+            <th>Store Name</th>
+            <%end%>
           <th>Date</th>
           <th>Start Time</th>
           <th>End Time</th>
           <!-- <th>Status</th> -->
-          <th class = "align_center">View Details</th>
-          <th> Options</th>
+          <% unless current_user.role == 'employee' %>
+            <th class = "align_center">Details</th>
+            <th>Options</th>
+            <%if state.downcase == 'past'%>
+              <th>Edit Report</th>
+            <%end%>
+          <%end%>
         </thead>
         <% shifts.each do |shift| %>
           <tr %>
             <td><%= link_to shift.employee.name, employee_path(shift.employee) %></td>
-            <td><%= link_to shift.store.name, store_path(shift.store) %></td>
-            <td><%= shift.date.strftime('%b %d, %Y') %></td>
+            <% unless current_user.role?(:manager) %>
+              <td>
+                <% if can? :show, shift.store %>
+                  <%= link_to shift.store.name, store_path(shift.store) %>
+                <%else%>
+                  <%= shift.store.name %>
+                <%end%>
+              </td>
+            <% end %>
+            <td><%= shift.date == Date.today ? 'Today' : shift.date.strftime('%b %d, %Y') %></td>
             <td><%= shift.start_time.strftime('%l:%M %p') %></td>
             <td><%= shift.end_time.nil? ? "#{shift.status.capitalize}" : shift.end_time.strftime('%l:%M %p') %></td>
             <!-- <td><%= shift.status.capitalize %> </td> -->
-            <td class = "align_center">
-              <%= link_to shift_path(shift) do %>
-                <i class="material-icons">details</i>
-              <% end %>
-          </td>
-            <td>
-              <%= link_to edit_shift_path(shift) do %>
-                <i class="material-icons">edit</i>
-              <% end %>
-
-              <% if shift.status == 'pending' %>
-                <%= link_to(shift_path(shift), method: :delete, data: { confirm: 'Are you sure you wish to delete this shift?' }) do %>
-                    <i class="material-icons">delete</i>
+            <% if can? :show, shift %>
+              <td class = "align_center">
+                <%= link_to shift_path(shift) do %>
+                  <i class="material-icons">details</i>
+                <% end %>
+              </td>
+              <td class="align_center">
+              <% if can? :manage, shift %>
+                  <%= link_to edit_shift_path(shift) do %>
+                    <i class="material-icons">edit</i>
+                  <% end %>
+                  <% if shift.status == 'pending' %>
+                    <%= link_to(shift_path(shift), method: :delete, data: { confirm: 'Are you sure you wish to delete this shift?' }) do %>
+                        <i class="material-icons">delete</i>
+                    <% end %>
+                  <% end %>
                 <% end %>
               <% end %>
+            </td>
+            <% if state.downcase == 'past' %>
+            <td class="align_center">
+              <%= link_to(new_shift_job_path(shift_id: shift.id)) do %>
+                  <i class="material-icons">content_paste</i>
+              <% end %>
+            <% end %>
             </td>
           </tr>
         <% end %>

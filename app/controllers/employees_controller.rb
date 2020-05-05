@@ -8,8 +8,8 @@ class EmployeesController < ApplicationController
     # for phase 3 only
     #if logged_in? and current_user.role == 'admin'
       @active_managers = Employee.managers.active.alphabetical.paginate(page: params[:page]).per_page(10)
-      @active_employees = Employee.regulars.active.alphabetical.paginate(page: params[:page]).per_page(10)
-      @inactive_employees = Employee.inactive.alphabetical.paginate(page: params[:page]).per_page(10)
+      @active_employees = Employee.regulars.active.alphabetical.paginate(page: params[:ipage]).per_page(10)
+      @inactive_employees = Employee.inactive.alphabetical.paginate(page: params[:ipage]).per_page(10)
     #elsif logged_in? and current_user.role == 'manager' and !current_user.current_assignment.nil?
       # store = current_user.current_assignment.store
       # @active_managers = store.employees.managers.active.alphabetical.paginate(page: params[:page]).per_page(10)
@@ -46,6 +46,7 @@ class EmployeesController < ApplicationController
       render action: 'edit'
     end
   end
+
 
 
   private

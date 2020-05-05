@@ -7,9 +7,16 @@
     <% else %>
 
       <table class="striped highlight">
+        <thead>
+          <th>Name</th>
+          <th>Shifts Worked at <%= @store.name%></th>
+        </thead>
         <% @current_employees.each do |employee| %>
           <tr %>
             <td><%= link_to employee.name, employee_path(employee) %></td>
+            <td>
+               <%= employee.shifts.for_store(@store).to_a.size%>
+             </td>
           </tr>
         <% end %>
       </table>

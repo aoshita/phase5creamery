@@ -9,9 +9,11 @@
           <th>Store</th>
           <th>Times Completed at Store</th>
         </thead>
-        <% Store.all.each do |store| %>
+        <% for store in @stores %>
           <tr %>
-            <td><%= link_to store.name, store_path(store) %></td>
+            <td><% if can? :show, store%><%= link_to store.name, store_path(store) %>
+              <% else%> <%=  store.name %><% end%>
+            </td>
             <td>
               <%= @job.shifts.for_store(store).to_a.size%>
             </td>

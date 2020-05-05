@@ -8,11 +8,12 @@ class JobsController < ApplicationController
     # get data on all jobs and paginate the output to 10 per page
     @jobs = Job.alphabetical.paginate(page: params[:page]).per_page(10)
     @active_jobs = Job.active.alphabetical.paginate(page: params[:page]).per_page(10)
-    @inactive_jobs = Job.inactive.alphabetical.paginate(page: params[:page]).per_page(10)
+    @inactive_jobs = Job.inactive.alphabetical.paginate(page: params[:ipage]).per_page(10)
   end
 
   def show
     retrieve_top_performing_employees
+    @stores = Store.active.alphabetical
   end
 
   def new

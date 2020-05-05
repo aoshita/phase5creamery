@@ -16,11 +16,11 @@
         <% @store_payrolls.each do |payroll| %>
           <tr>
             <td><%= link_to payroll.employee_name, employee_path(payroll.employee) %></td>
-            <td><%= number_to_ssn @employee.ssn %></td>
-            <td><%= payroll.pay_grade.level %></td>
-            <td><%= payroll.pay_grade_rate.rate %></td>
+            <td><%= number_to_ssn payroll.employee.ssn %></td>
+            <td><%= payroll.pay_grade %></td>
+            <td><%= payroll.pay_rate %></td>
             <td><%= payroll.hours %></td>
-            <td><%= payroll.pay_earned %></td>
+            <td>$ <%= payroll.pay_earned.round(2) %></td>
 
           </tr>
         <% end %>
@@ -30,3 +30,4 @@
     <% end %>
   </div>
 </div>
+<%= link_to 'Back', :back %>

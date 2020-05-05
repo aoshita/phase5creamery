@@ -1,21 +1,22 @@
 <div class="card">
   <div class="card-content">
-    <h4>Payroll Report for<%= @emp_payroll.employee_name %></h4>
+    <h4>Latest Payroll Report for <%= @emp_payroll.employee_name %></h4>
     <h5><%= @emp_payroll.employee.role.capitalize %></h5><br />
 
     <b>Social Security Number:&nbsp;&nbsp;</b><br>
-      <%= number_to_ssn @employee.ssn %><br>
+      <%= number_to_ssn @emp_payroll.employee.ssn %><br><br>
 
     <b>Pay Grade:&nbsp;&nbsp;</b><br>
-      <%=  @emp_payroll.pay_grade.level %><br>
+      <%=  @emp_payroll.pay_grade %><br><br>
 
     <b>Pay Rate:&nbsp;&nbsp;</b><br>
-      <%=  @emp_payroll.pay_grade_rate.rate %><br /><br />
+      <%=  @emp_payroll.pay_rate %><br /><br />
 
     <b>Total Hours Worked:&nbsp;&nbsp;</b><br>
       <%= @emp_payroll.hours %><br /><br />
 
     <b>Total Pay Earned:&nbsp;&nbsp;</b><br>
-      <%= @emp_payroll.pay_earned %><br /><br />
+      $ <%= @emp_payroll.pay_earned.round(2) %><br /><br />
   </div>
 </div>
+<%= link_to 'Back', :back %>

@@ -1,0 +1,16 @@
+<div id="tabbed">
+  <tabs>
+
+    <tab name="current rates" v-bind:selected="true">
+      <%= render partial: 'pay_grade_rate_lists', locals: {pay_grade_rates: @current_rates, state: 'current'} %>
+
+    </tab>
+    <tab name="past rates" >
+      <%= render partial: 'pay_grade_rate_lists', locals: {pay_grade_rates: @past_rates, state: 'past'} %>
+
+    </tab>
+
+  </tabs>
+</div>
+
+<p>&nbsp;</p>

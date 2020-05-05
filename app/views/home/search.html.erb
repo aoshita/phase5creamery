@@ -1,0 +1,54 @@
+<h5>Search result for term <em>'<%= @query %>'</em> resulted in <%= pluralize(@total_hits, 'hit') %></h5>
+<p class="supertiny">&nbsp;</p>
+
+<% if @employees.empty? %>
+<h5>No employees matching term '<%= @query %>'</h5>
+<% else %>
+  <div class="card">
+    <div class="card-content">
+      <p><em><strong>Employees matching term '<%= @query %>'</strong></em></p>
+        <table class="striped highlight">
+          <thead>
+            <th>Name</th>
+            <th>Current Assignment</th>
+            <th>Phone</th>
+            <th class="align_center">Options</th>
+          </thead>
+          <% for employee in @employees %>
+            <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+              <td>
+                <% if can? :show, employee %>
+                  <%= link_to employee.name, employee_path(employee) %>
+                <%else%>
+                  <%=  employee.name %>
+                <% end %>
+              </td>
+              <td>
+                <% if can? :show, employee.current_assignment %>
+                  <%= employee.current_assignment.nil? ? 'n/a' : link_to(employee.current_assignment.store.name, assignment_path(employee.current_assignment))  %>
+                <% else %>
+                  <%=  employee.current_assignment.store.name %>
+                <% end %>
+              </td>
+              <td><%= number_to_phone employee.phone %></td>
+            <td class="align_center">
+              <% if can? :edit, employee %>
+                <%= link_to edit_employee_path(employee) do %>
+                  <i class="material-icons">edit</i>
+                <% end %>
+              <% end %>
+              <% if can? :destroy, employee %>
+              <%= link_to(employee_path(employee), method: :delete, data: { confirm: 'Are you sure you wish to delete this information?' }) do %>
+                  <i class="material-icons">delete</i>
+              <% end %>
+            <% end %>
+            </td>
+            </tr>
+          <% end %>
+        </table>
+        <p class="supertiny"></p>
+        <br />
+      <% end %>
+    </div>
+  </div>
+  <%= link_to 'Back', :back %>

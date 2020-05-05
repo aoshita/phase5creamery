@@ -3,13 +3,13 @@ class Employee < ApplicationRecord
   include AppHelpers::Deletions
   include AppHelpers::Activeable::InstanceMethods
   extend AppHelpers::Activeable::ClassMethods
-  
+
   has_secure_password
 
   # Relationships
-  has_many :assignments 
+  has_many :assignments
   has_many :stores, through: :assignments
-  has_many :shifts, through: :assignments 
+  has_many :shifts, through: :assignments
   has_many :pay_grades, through: :assignments
   has_many :pay_grade_rates, through: :pay_grades
 
@@ -20,6 +20,7 @@ class Employee < ApplicationRecord
   scope :managers,        -> { where('role = ?', 'manager') }
   scope :admins,          -> { where('role = ?', 'admin') }
   scope :alphabetical,    -> { order('last_name, first_name') }
+  scope :search,          ->(term) { where('first_name LIKE ? OR last_name LIKE ?', "#{term}%", "#{term}%") }
 
   # Validations
   validates_presence_of :first_name, :last_name, :ssn
@@ -31,8 +32,8 @@ class Employee < ApplicationRecord
   # ... more validations for phase 4 & 5
   validates :username, presence: true, uniqueness: { case_sensitive: false}
   validates_presence_of :role, on: :create
-  validates_presence_of :password, on: :create 
-  validates_presence_of :password_confirmation, on: :create 
+  validates_presence_of :password, on: :create
+  validates_presence_of :password_confirmation, on: :create
   validates_confirmation_of :password, on: :create, message: 'does not match'
   validates_length_of :password, minimum: 4, message: 'must be at least 4 characters long', allow_blank: true
 
@@ -40,7 +41,7 @@ class Employee < ApplicationRecord
   def name
     "#{last_name}, #{first_name}"
   end
-  
+
   def proper_name
     "#{first_name} #{last_name}"
   end
@@ -48,13 +49,13 @@ class Employee < ApplicationRecord
   def over_18?
     date_of_birth.to_date < 18.years.ago.to_date
   end
-  
+
   def age
     (Time.now.to_s(:number).to_i - date_of_birth.to_time.to_s(:number).to_i)/10e9.to_i
   end
 
   def current_assignment
-    curr_assignment = self.assignments.current    
+    curr_assignment = self.assignments.current
     return nil if curr_assignment.empty?
     curr_assignment.first   # return as a single object, not an array
   end

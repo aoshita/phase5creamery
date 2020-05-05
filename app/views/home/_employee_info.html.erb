@@ -1,5 +1,18 @@
 <%= render partial: 'employees/employee_data', locals: {object: @employee} %>
-<div class= "row">
+<div class= "align_center">
   <%= render :partial => 'partials/display_base_errors', locals: {object: @employee} %>
-  <%= render :partial => 'partials/object_options', locals: {model_name: 'employee', object: @employee} %>
+    <div class="form-actions">
+
+      <% if @employee.role == 'employee'%>
+          <%= link_to employee_payroll_path(@employee), class: 'waves-effect waves-light btn' do %>
+            &nbsp;View Latest Pay Report
+          <% end %>
+      <% end %>
+      <% if can? :edit, @employee %>
+        <%= link_to edit_employee_path(@employee), class: 'waves-effect waves-light btn' do %>
+            &nbsp;<%= "Edit #{@employee.name}" %>
+        <% end %>
+      &nbsp;&nbsp;
+      <% end %>
+  </div>
 </div>

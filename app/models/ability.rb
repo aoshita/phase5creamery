@@ -70,7 +70,7 @@ class Ability
 
       # they can read their own assignment
       can :show, Assignment do |a|
-        user.current_assignment.id == a.id
+        user.id == a.employee_id
       end
 
     else

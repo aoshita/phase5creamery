@@ -1,25 +1,19 @@
 <%= render partial: 'shift_lists', locals: { state: 'upcoming',
                                                   shifts: @upcoming_shifts } %>
-<div class="form-actions">
-  #if has a pending shift today, clcock in,
-  #if has a started shift, clock out
-  <% if @upcoming_shifts.pending.for_date(Date.today).to_a%>
-    <%= link_to(eval("#{model_name.pluralize}_path"), class: 'waves-effect waves-light btn') do %>
-      &nbsp;Display All <%# model_name.pluralize.capitalize %>
-    <% end %>
-    &nbsp;&nbsp;
-  <% end %>
+  <div class="form-actions", align = 'center'>
+    <% if current_user.role == 'employee'%>
+      <% if not @shift.nil? and @shift.status == 'pending'%>
+        <%= link_to clock_in_path(shift_id: @shift.id), method: 'patch', class: 'waves-effect waves-light btn' do %>
+          &nbsp;<strong>Clock in</strong>
+        <% end %>
+        &nbsp;&nbsp;
+      <% end %>
 
-  <% if can? :edit, object %>
-    <%= link_to(eval("edit_#{model_name}_path(object)"), class: 'waves-effect waves-light btn') do %>
-        &nbsp;<%= "Edit #{opt}" %>
+      <% if not @shift.nil? and @shift.status == 'started'%>
+        <%= link_to clock_out_path(shift_id: @shift.id), method: 'patch', class: 'waves-effect waves-light btn' do %>
+            &nbsp;Clock Out
+        <% end %>
+        &nbsp;&nbsp;
+      <% end %>
     <% end %>
-    &nbsp;&nbsp;
-  <% end %>
-
-  <% if can?(:destroy, object) && controller.respond_to?(:destroy) %>
-    <%= link_to(eval("#{model_name}_path(object)"), method: 'delete', data: {confirm: "Are you sure you want to permanently delete #{opt}"}, class: 'waves-effect waves-light btn btn-alert') do %>
-        &nbsp;<%= "Delete #{opt}" %>
-    <% end %>
-  <% end %>
-</div>
+  </div>

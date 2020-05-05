@@ -5,8 +5,24 @@ class AssignmentsController < ApplicationController
 
   def index
     # for phase 3 only
+    @stores = Store.active.alphabetical.to_a
+    if current_user.role?(:employee)
+      unless current_user.assignments.to_a.empty?
+        @current_assignments = current_user.assignments.chronological.current.paginate(page: params[:page]).per_page(10)
+        @past_assignments = current_user.assignments.past.chronological.paginate(page: params[:ipage]).per_page(10)
+      end
+    else
+      if current_user.role?(:manager)
+        @store = current_user.current_assignment.store
+        # s_loc = @stores.index(store)
+        # @stores.insert(0, @stores.delete_at(s_loc))
+      else
+        @store = @stores[0]
+      end
       @current_assignments = Assignment.current.chronological.paginate(page: params[:page]).per_page(10)
-      @past_assignments = Assignment.past.chronological.paginate(page: params[:page]).per_page(10)
+      @past_assignments = Assignment.past.chronological.paginate(page: params[:ipage]).per_page(10)
+    end
+
   end
 
   def show
