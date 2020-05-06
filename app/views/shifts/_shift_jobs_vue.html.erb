@@ -1,0 +1,57 @@
+<div id="job_handilng">
+  <%= hidden_field_tag "shift_id", @shift.id %>
+  <% unless @jobs_completed.empty? %>
+    <div class="card yellow lighten-4">
+      <div class="card-content">
+        <span class="card-title">Jobs Completed</span>
+        <ul is='dosage-row'
+            v-for="job in jobs"
+            v-bind:job="job"
+            class="no_bullet">
+        </ul>
+      </div>
+      <% if can? :new, ShiftJob %>
+        <div class="card-action">
+          <!-- Could bind title based on state, but chance to show v-else directive -->
+          <div v-if="modal_open">
+            <%= link_to "Remove job from shift", "#", {%s(v-on:click) => "switch_modal()"} %>
+          </div>
+          <div v-else>
+            <%= link_to "Add a new job", "#", {%s(v-on:click) => "switch_modal()"} %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <% if can? :new, ShiftJob %>
+      <div class="card">
+        <div class="card-action">
+          <!-- Note in class that message not consistent with activity -->
+          <%= link_to "Add a job to shift", "#", {%s(v-on:click) => "switch_modal()"} %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div v-if="modal_open">
+    <new-job-form></new-job-form>
+  </div>
+
+</div> <!-- End of div#dosage_handling -->
+
+
+<!-- Defining Vue templates to work with components -->
+<script type="text/x-template" id="job-row">
+  // Commenting this out b/c template in js file, but if I wanted it here...
+  // <li>
+  //   <a v-on:click="remove_record(dosage)" class="remove">x&nbsp;&nbsp;</a>
+  //   {{ dosage.medicine_name }}:&nbsp;&nbsp;
+  //   {{ dosage.units_given }}&nbsp;units
+  // </li>
+</script>
+
+<!--  much easier to include this complicated template here
+      rather than in the js file (IMO) -->
+<script type="text/x-template" id="job-form-template">
+  <%= render "shift_job_form_template", locals: {shift: @shift, job: @job, shift_job: ShiftJob.new} %>
+</script>

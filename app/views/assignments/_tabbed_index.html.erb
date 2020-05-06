@@ -2,23 +2,9 @@
   <tabs>
 
     <% for store in @stores %>
-      <tab name="current assignments at <%= store.name %>" v-bind:selected = "<%= store.name == @store.name ? 'true' : 'false'%>">
+      <tab name="<%= store.name %>" v-bind:selected = "<%= store.name == @store.name ? 'true' : 'false'%>">
         <%= render partial: 'assignments_list', locals: { state: 'current', assignments: @current_assignments.for_store(store) } %>
-      </tab>
-
-    <% end %>
-
-  </tabs>
-</div>
-<p>&nbsp;</p>
-<div id="tabbed">
-  <tabs>
-
-    <% for store in @stores %>
-
-      <tab name= "past assignments at <%= store.name %>" v-bind:selected = "<%= store.name == @store.name ? 'true' : 'false'%>">
         <%= render partial: 'assignments_list', locals: { state: 'past', assignments: @past_assignments.for_store(store) } %>
-
       </tab>
 
     <% end %>

@@ -7,11 +7,12 @@ class ShiftsController < ApplicationController
 
   def index
     # get data on all shifts and paginate the output to 10 per page\
+    @stores = Store.active.alphabetical.to_a
     if logged_in? and current_user.role == 'employee'
       @upcoming_shifts = current_user.shifts.upcoming.chronological.paginate(page: params[:page]).per_page(10)
       @completed_shifts = current_user.shifts.completed.chronological.paginate(page: params[:ipage]).per_page(10)
     else
-      @stores = Store.active.alphabetical.to_a
+
       if current_user.role?(:manager)
         @store = current_user.current_assignment.store
         # s_loc = @stores.index(store)
@@ -53,6 +54,14 @@ class ShiftsController < ApplicationController
     else
       render action: 'edit'
     end
+  end
+
+
+  def destroy
+    name = @shift.employee.proper_name
+    date = @shift.date.strftime('%b %d, %Y')
+    @shift.destroy
+    redirect_to shifts_path, notice: "Removed #{name}'s shift on #{date}"
   end
 
 

@@ -27,6 +27,7 @@
             <th class = "align_center">Details</th>
             <th>Options</th>
             <%if state.downcase == 'past'%>
+              <th>Reports Completed</th>
               <th>Edit Report</th>
             <%end%>
           <%end%>
@@ -66,8 +67,10 @@
                 <% end %>
               <% end %>
             </td>
-            <% if state.downcase == 'past' %>
-            <td class="align_center">
+            <% if state.downcase == 'past' and not current_user.role?(:employee)%>
+            <td><strong><%= shift.report_completed? ? shift.shift_jobs.count : 'None'%></strong></td>
+
+              <td class="align_center">
               <%= link_to(new_shift_job_path(shift_id: shift.id)) do %>
                   <i class="material-icons">content_paste</i>
               <% end %>

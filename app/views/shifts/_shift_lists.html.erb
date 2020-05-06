@@ -1,9 +1,9 @@
 <div class="card">
   <div class="card-content">
-    <h5><%= state.capitalize %> Shifts</h5>
       <% if shifts.empty? %>
-        <p>There are no <%= state.downcase %> shifts at this time.</p>
+        <h5>There are no <%= state.downcase %> shifts at this time.</h5>
       <% else %>
+        <h4><%= state.capitalize %> Shifts</h4>
       <table class="striped highlight">
         <thead>
           <th>Employee Name</th>
@@ -15,8 +15,8 @@
           <th class = "align_center">View Details</th>
           <th> Options</th>
         </thead>
-        <% shifts.each do |shift| %>
-          <tr %>
+        <% for shift in shifts %>
+          <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
             <td><%= link_to shift.employee.name, employee_path(shift.employee) %></td>
             <td><%= link_to shift.store.name, store_path(shift.store) %></td>
             <td><%= shift.date.strftime('%b %d, %Y') %></td>

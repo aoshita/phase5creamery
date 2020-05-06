@@ -1,6 +1,6 @@
 class StoresController < ApplicationController
 
-  before_action :set_store, only: [:show, :edit, :update, :destroy]
+  before_action :set_store, only: [:show, :edit, :update]
   before_action :check_login
   authorize_resource
 

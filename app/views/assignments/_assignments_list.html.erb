@@ -17,7 +17,7 @@
           <% end %>
         </thead>
         <% assignments.each do |assignment| %>
-          <tr %>
+          <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
             <td>
               <% if can? :show, assignment.employee %>
                 <%= link_to assignment.employee.name, employee_path(assignment.employee) %>

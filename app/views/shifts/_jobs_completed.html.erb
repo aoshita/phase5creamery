@@ -15,8 +15,10 @@
           <tr %>
             <td><%= link_to job.name, job_path(job) %></td>
             <td>
-            <%= link_to(shift_job_path(shift_id: @shift.id, job_id: job.id), method: :delete, data: { confirm: 'Are you sure you wish to remove this job from shift?' }) do %>
-                <i class="material-icons">delete</i>
+            <% if can? :destroy, ShiftJob%>
+              <%= link_to(shift_job_path(shift_id: @shift.id, job_id: job.id), method: :delete, data: { confirm: 'Are you sure you wish to remove this job from shift?' }) do %>
+                  <i class="material-icons">delete</i>
+              <% end %>
             <% end %>
             </td>
           </tr>

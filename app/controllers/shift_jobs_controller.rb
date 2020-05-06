@@ -5,6 +5,7 @@ class ShiftJobsController < ApplicationController
   authorize_resource
 
   def new
+    job_ids = []
     @shift_job = ShiftJob.new
     @shift     = Shift.find(params[:shift_id])
     @shift_job.shift = @shift
@@ -23,6 +24,7 @@ class ShiftJobsController < ApplicationController
 
   def destroy
     @shift     = Shift.find(params[:shift_id])
+    @job = Job.find(params[:job_id])
     if @shift_job.destroy
       redirect_to shift_path(@shift), notice: "Removed from #{@shift.employee.name}'s shift."
     else
