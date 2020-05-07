@@ -52,6 +52,7 @@ class Ability
     elsif user.role? :employee
 
       can :index, Assignment
+      can :manage, Payroll
 
       # they can read their own data
       can :show, Employee do |this_user|
