@@ -11,7 +11,7 @@
           <th>Name</th>
           <th>Phone</th>
           <th>Payroll</th>
-          <th class="align_center">Options</th>
+          <th class="align_center">Assignmnets</th>
         </thead>
         <% @active_stores.each do |store| %>
           <tr>
@@ -23,9 +23,7 @@
               <% end %>
             </td>
             <td class="align_center">
-              <%= link_to edit_store_path(store) do %>
-                <i class="material-icons">edit</i>
-              <% end %>
+              <%= store.assignments.current.count%>
             </td>
           </tr>
         <% end %>

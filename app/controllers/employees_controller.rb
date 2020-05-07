@@ -1,7 +1,6 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: [:show, :edit, :update, :destroy]
   before_action :check_login
-  #filter_parameter_logging :role,
   authorize_resource
 
   def index

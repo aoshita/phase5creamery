@@ -1,6 +1,6 @@
 <%= f.input :assignment_id, collection: Assignment.current.chronological.to_a.map { |a| a.employee.name}.sort, selected: @shift.assignment_id, include_blank: true %>
 <%= f.input :date, label_html: { class: 'active' }, selected: Date.today %>
-<%= f.input :start_time,label_html: { class: 'active' }, selected: Time.now%>
+<%= f.input :start_time, label_html: { class: 'active' }%>
 <%= f.input :end_time, label_html: { class: 'active' } %>
 <%= f.input :notes, label_html: { class: 'active' } %>
 <%= f.input :status, collection: ['pending', 'started', 'completed'], include_blank: true %>

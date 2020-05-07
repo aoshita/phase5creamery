@@ -33,7 +33,7 @@ class ShiftsController < ApplicationController
   def new
     @shift = Shift.new
     @shift.assignment_id = params[:assignment_id] unless params[:assignment_id].nil?
-    #@times =
+    get_time_options
   end
 
   def edit
@@ -75,6 +75,9 @@ class ShiftsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def shift_params
     params.require(:shift).permit(:assignment_id, :date, :start_time, :end_time, :notes, :status)
+  end
+
+  def get_time_options
   end
 
 end

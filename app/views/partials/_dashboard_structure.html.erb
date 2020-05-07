@@ -1,6 +1,6 @@
 <div class="row">
-  <h4>Dashboard</h4>
-  <div class="col s7">
+  <h4>Welcome, <%= current_user.proper_name %></h4>
+  <div class="col s8">
     <!-- primary partial gets displayed here in main div -->
     <%= render partial: "#{primary}" %>
     <!-- sometimes we want another partial below -->
@@ -10,7 +10,7 @@
     <% end %>
 
   </div>
-  <div class="col s5">
+  <div class="col s4">
     <!-- render the sidebar, if it exists -->
     <%= render partial: "#{sidebar}" unless sidebar.blank? %>
   </div>

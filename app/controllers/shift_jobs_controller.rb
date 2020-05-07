@@ -5,7 +5,7 @@ class ShiftJobsController < ApplicationController
   authorize_resource
 
   def new
-    job_ids = []
+    #job_ids = []
     @shift_job = ShiftJob.new
     @shift     = Shift.find(params[:shift_id])
     @shift_job.shift = @shift
