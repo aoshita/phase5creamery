@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-content">
-    <h4> Store Performances </h4>
+    <h4> Store Performances For Past Week </h4>
     <% if @active_stores.empty? %>
       <p>There are no active stores at this time.</p>
     <% else %>
@@ -8,17 +8,17 @@
       <table class="striped highlight">
         <thead>
           <th>Name</th>
-          <th>Employees Under 18</th>
+          <th>Total Shifts Finished</th>
           <th>Number of Slacking Workers</th>
           <th>Slacking Workers</th>
         </thead>
         <% @active_stores.each do |store| %>
           <tr>
             <td><%= link_to store.name, store_path(store) %></td>
-            <td><%= store.employees.younger_than_18.count%></td>
-            <td><%= store.shifts.incomplete.count %></td>
+            <td><%= store.shifts.for_past_days(7).finished.count%></td>
+            <td><%= store.shifts.for_past_days(7).pending.count %></td>
             <td>
-              <%= store.shifts.incomplete.map{ |s| s.employee.proper_name}.group_by{|name| name }.sort_by{ |k, v| v.size*-1 }.map { |k,v| [" | ",k, ": ",v.size," |  "] }.take(4).join("") %>
+              <%= store.shifts.pending.for_past_days(7).map{ |s| s.employee.proper_name}.group_by{|name| name }.sort_by{ |k, v| v.size*-1 }.map { |k,v| [" | ",k, ": ",v.size," |  "] }.take(4).join("") %>
             </td>
           </tr>
           <% end %>

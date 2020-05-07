@@ -14,7 +14,7 @@
           <th>Name</th>
           <th>Phone</th>
           <th class="align_center">Add Shift</th>
-          <th class="align_center">Options</th>
+          <th>Shifts Missed in Past Week</th>
         </thead>
         <% for employee in employees %>
           <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
@@ -33,19 +33,7 @@
                 <% end %>
               <% end %>
             </td>
-
-          <td class="align_center">
-            <% if can? :edit, employee %>
-              <%= link_to edit_employee_path(employee) do %>
-                <i class="material-icons">edit</i>
-              <% end %>
-            <% end %>
-            <% if can? :destroy, employee %>
-            <%= link_to(employee_path(employee), method: :delete, data: { confirm: 'Are you sure you wish to delete this information?' }) do %>
-                <i class="material-icons">delete</i>
-            <% end %>
-          <% end %>
-          </td>
+          <td><%= employee.shifts.for_past_days(7).pending.count %></td>
           </tr>
         <% end %>
       </table>

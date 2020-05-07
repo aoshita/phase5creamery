@@ -9,14 +9,14 @@
       <table class="striped highlight">
         <thead>
           <th>Name</th>
-          <th>Phone</th>
           <th>Payroll</th>
           <th class="align_center">Assignmnets</th>
+          <th>Employees Under 18</th>
+
         </thead>
         <% @active_stores.each do |store| %>
           <tr>
             <td><%= link_to store.name, store_path(store) %></td>
-            <td><%= number_to_phone store.phone %></td>
             <td class="align_center">
               <%= link_to store_payroll_path(store) do %>
                 <i class="material-icons">assessment</i>
@@ -25,6 +25,8 @@
             <td class="align_center">
               <%= store.assignments.current.count%>
             </td>
+            <td><%= store.employees.younger_than_18.count%></td>
+
           </tr>
         <% end %>
       </table>

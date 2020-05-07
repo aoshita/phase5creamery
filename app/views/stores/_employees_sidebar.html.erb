@@ -10,6 +10,7 @@
         <thead>
           <th>Name</th>
           <th>Shifts Worked at <%= @store.name%></th>
+          <th>Shifts Missed in last month</th>
         </thead>
         <% @current_employees.each do |employee| %>
           <tr %>
@@ -17,11 +18,13 @@
             <td>
                <%= employee.shifts.for_store(@store).to_a.size%>
              </td>
+             <td><%= employee.shifts.for_past_days(31).pending.count %></td>
           </tr>
         <% end %>
       </table>
       <p class="supertiny"></p>
       <br />
+
     <% end %>
   </div>
 </div>
