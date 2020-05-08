@@ -42,7 +42,7 @@ class ShiftsController < ApplicationController
   def create
     @shift = Shift.new(shift_params)
     if @shift.save
-      redirect_to @shift, notice: "Successfully added shift to the system."
+      redirect_to home_path, notice: "Successfully added shift to the system."
     else
       render action: 'new'
     end
