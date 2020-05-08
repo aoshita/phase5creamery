@@ -1,6 +1,7 @@
 class PayrollsController < ApplicationController
   before_action :check_login
   authorize_resource
+  
   def store_pay_form
     @store = Store.find(params[:id])
   end
