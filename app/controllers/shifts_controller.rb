@@ -78,6 +78,25 @@ class ShiftsController < ApplicationController
   end
 
   def get_time_options
+    @times = []
+    times = []
+    times1 = []
+    hours = ["12","1","2","3","4","5","6","7","8","9","10","11"]
+    hours1 = []
+    (0..23).each do |n|
+      hours1 << n.to_s
+    end
+    minutes = [":00",":15",":30", ":45"]
+    for hour in hours1 do
+      for min in minutes
+        time = hour + min
+        @times << Time.parse(time)
+      end
+    end
+    # @times = times + times
+    # for time in times do
+    #   @time
+    # end
   end
 
 end

@@ -43,12 +43,12 @@ class Shift < ApplicationRecord
   def report_completed?
     self.shift_jobs.count > 0
   end
-  
+
   # method uses the date_time_helpers gem; https://github.com/profh/time_date_helpers
   def duration
     (round_minutes(self.end_time) - round_minutes(self.start_time, direction: :down))/3600.0
   end
-  
+
   # Callbacks
   # set default end_time (on create only)
   before_create :set_shift_end_time
@@ -61,6 +61,27 @@ class Shift < ApplicationRecord
     end
   end
 
+  # def get_times
+  #   final_times = []
+  #   times = []
+  #   hours = []
+  #   (0..23).each do |n|
+  #     hours << n.to_s
+  #   end
+  #   minutes = [":00",":15",":30", ":45"]
+  #   for hour in hours do
+  #     for min in minutes
+  #       time = hour + min
+  #       @times << Time.parse(time)
+  #     end
+  #   end
+  #   return final_times
+  # end
+
+
+
+
+
   # Misc Constants
   STATUS_LIST = [['Pending', 'pending'],['Started', 'started'],['Finished', 'finished']].freeze
 
@@ -69,16 +90,16 @@ class Shift < ApplicationRecord
   def assignment_starts
     @assignment_starts = self.assignment.start_date.to_date
   end
-  
+
   def assignment_must_be_current
     return true if self.assignment.nil?
     unless self.assignment.end_date.nil?
       errors.add(:assignment_id, "is not a current assignment at the creamery")
     end
   end
-  
+
   def set_shift_end_time
-    return true unless self.end_time.nil? 
+    return true unless self.end_time.nil?
     self.end_time = self.start_time + (3*60*60)
   end
 
@@ -87,5 +108,7 @@ class Shift < ApplicationRecord
       errors.add(:base, "This shift either has begun or has finished and cannot be deleted.")
     end
   end
-  
+
+
+
 end
